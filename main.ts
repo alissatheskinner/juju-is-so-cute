@@ -1,6 +1,13 @@
-scene.onOverlapTile(SpriteKind.Player, assets.tile`transparency16`, function (sprite, location) {
-	
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    lunar.startEffect(effects.rings, 500)
+    music.baDing.play()
+    info.changeScoreBy(1)
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.castle.rock2, function (sprite, location) {
+    game.over(true, effects.confetti)
+})
+let lunar: Sprite = null
 scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
@@ -124,7 +131,7 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
 tiles.setCurrentTilemap(tilemap`level1`)
-let lunar = sprites.create(img`
+lunar = sprites.create(img`
     . . . . . . 5 . 5 . . . . . . . 
     . . . . . f 5 5 5 f f . . . . . 
     . . . . f 1 5 2 5 1 6 f . . . . 
@@ -142,7 +149,7 @@ let lunar = sprites.create(img`
     . . . f f f f f f f f f f . . . 
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
-lunar.setPosition(10, 102)
+lunar.setPosition(10, 112)
 controller.moveSprite(lunar, 100, 0)
 scene.cameraFollowSprite(lunar)
 music.playMelody("G B A G C5 B A B ", 120)
